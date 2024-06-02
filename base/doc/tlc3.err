@@ -1,4 +1,4 @@
-\newcommand\erratafiledate{2024/05/13}        % needs / and not -
+\newcommand\erratafiledate{2024/05/31}        % needs / and not -
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To produce a printed version of this errata file run this file through
@@ -715,6 +715,14 @@ is not shown.}
 \erroronpage{I-389}{syntax box -1}{DC}{2023/10/06}{s}
 
 \u{\cs{right}} \> \u{\cs{rightmark}}
+
+
+\erroronpage{I-393}{Documentation of \rlap{\cs{IfMarksEqualTF}}}{FMi}{2024/05/31}{s}
+
+Add paragraph:
+Note that two retrieved mark values are only considered equal if they
+originated from the same \cs{InsertMark} command — it is not enough
+that they contain the same data, as that may be conincidental.
 
 
 
@@ -1437,6 +1445,9 @@ a few that \> a few \u{commands} that
 
 \erroronpage{II-658}{first item in the list}{BeB}{2024/03/17}{s}
 square root $\sqrt{x}$ \> square root \texttt{sqrt} $x$
+
+\erroronpage{II-663}{A-3-7}{MRu}{2024/05/01}{}
+In the code, text should read either ``This is the content'' or ``These are the contents''.
 
 \erroronpage{II-682}{para -2, l .3}{FMi}{2023/04/28}{s}
 \texttt{Harf\u{b}uzz} \> \texttt{Harf\u{B}uzz}
