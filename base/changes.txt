@@ -6,6 +6,22 @@ to completeness or accuracy and it contains some references to files that are
 not part of the distribution.
 ================================================================================
 
+================================================================================
+All changes above are only part of the development branch for the next release.
+================================================================================
+
+2024-06-04  Yukai Chou  <muzimuzhi@gmail.com>
+
+	* source2e.tex:
+	Add new module lttemplates to the documentation.
+
+	* lttemplates.dtx:
+	Fix markup typos.
+
+#########################
+# 2024-06-01 Release
+#########################
+
 2024-05-31  Frank Mittelbach  <Frank.Mittelbach@latex-project.org>
 
 	* ltmarks.dtx (subsection{Allocating new mark classes}):
@@ -34,7 +50,7 @@ not part of the distribution.
 2024-04-26  Frank Mittelbach  <Frank.Mittelbach@latex-project.org>
 
 	* doc.dtx:
-	Do not error with "suspicous date" when rolling back to
+	Do not error with "suspicious date" when rolling back to
 	early years of LaTeX2e (gh/1336)
 
 2024-04-24  Yukai Chou  <muzimuzhi@gmail.com>
@@ -214,10 +230,6 @@ not part of the distribution.
 
 	* ltplain.dtx (section{Plain \TeX}):
 	Set \tracinglostchars to 2 in \tracingnone (gh/549)
-
-================================================================================
-All changes above are only part of the development branch for the next release.
-================================================================================
 
 #########################
 # 2023-11-01 PL1 Release
