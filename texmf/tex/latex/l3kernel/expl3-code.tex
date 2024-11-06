@@ -75,7 +75,7 @@
 %% and all files in that bundle must be distributed together.
 %% 
 %% File: expl3.dtx
-\def\ExplFileDate{2024-05-08}%
+\def\ExplFileDate{2024-11-02}%
 \begingroup
   \def\next{\endgroup}%
   \expandafter\ifx\csname PackageError\endcsname\relax
@@ -716,7 +716,6 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   \__kernel_primitive:NN \pdfoutline            \tex_pdfoutline:D
   \__kernel_primitive:NN \pdfoutput             \tex_pdfoutput:D
   \__kernel_primitive:NN \pdfpageattr           \tex_pdfpageattr:D
-  \__kernel_primitive:NN \pdfpagesattr          \tex_pdfpagesattr:D
   \__kernel_primitive:NN \pdfpagebox            \tex_pdfpagebox:D
   \__kernel_primitive:NN \pdfpageref            \tex_pdfpageref:D
   \__kernel_primitive:NN \pdfpageresources      \tex_pdfpageresources:D
@@ -1313,13 +1312,11 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   \__kernel_primitive:NN \ybaselineshift        \tex_ybaselineshift:D
   \__kernel_primitive:NN \yoko                  \tex_yoko:D
   \__kernel_primitive:NN \vfi                   \tex_vfi:D
-  \__kernel_primitive:NN \currentcjktoken       \tex_currentcjktoken:D
   \__kernel_primitive:NN \disablecjktoken       \tex_disablecjktoken:D
   \__kernel_primitive:NN \enablecjktoken        \tex_enablecjktoken:D
   \__kernel_primitive:NN \forcecjktoken         \tex_forcecjktoken:D
   \__kernel_primitive:NN \kchar                 \tex_kchar:D
   \__kernel_primitive:NN \kchardef              \tex_kchardef:D
-  \__kernel_primitive:NN \kuten                 \tex_kuten:D
   \__kernel_primitive:NN \uptexrevision         \tex_uptexrevision:D
   \__kernel_primitive:NN \uptexversion          \tex_uptexversion:D
   \__kernel_primitive:NN \odelcode              \tex_odelcode:D
@@ -6138,6 +6135,7 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
     \exp_after:wN \__seq_map_pairwise_function:wNw #2 \s__seq_stop #3
       #1 { ? \prg_break: } { }
     \prg_break_point:
+    \prg_break_point:Nn \seq_map_break: { }
   }
 \cs_new:Npn \__seq_map_pairwise_function:wNw \s__seq #1 \s__seq_stop #2
   {
@@ -6470,8 +6468,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { #1 = \__int_eval:w #2 \__int_eval_end: }
 \cs_new_protected:Npn \int_gset:Nn #1#2
   { \tex_global:D #1 = \__int_eval:w #2 \__int_eval_end: }
-\cs_generate_variant:Nn \int_set:Nn  { c }
-\cs_generate_variant:Nn \int_gset:Nn { c }
+\cs_generate_variant:Nn \int_set:Nn  { NV , c , cV }
+\cs_generate_variant:Nn \int_gset:Nn { NV , c , cV }
 \cs_new_eq:NN \int_use:N \tex_the:D
 \cs_new:Npn \int_use:c #1 { \tex_the:D \cs:w #1 \cs_end: }
 \cs_new_protected:Npn \__int_compare_error:
@@ -8385,8 +8383,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
 \cs_new:Npn \__clist_remove_all:
   { \exp_after:wN \__clist_remove_all:w \__clist_tmp:w , }
 \cs_new:Npn \__clist_remove_all:w #1 , \s__clist_mark , #2 , { \exp_not:n {#1} }
-\cs_generate_variant:Nn \clist_remove_all:Nn  { c , NV , cV }
-\cs_generate_variant:Nn \clist_gremove_all:Nn { c , NV , cV }
+\cs_generate_variant:Nn \clist_remove_all:Nn  { c , NV , cV , Ne , ce }
+\cs_generate_variant:Nn \clist_gremove_all:Nn { c , NV , cV , Ne , ce }
 \cs_new_protected:Npn \clist_reverse:N #1
   { \__kernel_tl_set:Nx #1 { \exp_args:No \clist_reverse:n {#1} } }
 \cs_new_protected:Npn \clist_greverse:N #1
@@ -12952,8 +12950,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { #1 = \__dim_eval:w #2 \__dim_eval_end: \scan_stop: }
 \cs_new_protected:Npn \dim_gset:Nn #1#2
   { \tex_global:D #1 = \__dim_eval:w #2 \__dim_eval_end: \scan_stop: }
-\cs_generate_variant:Nn \dim_set:Nn  { c }
-\cs_generate_variant:Nn \dim_gset:Nn { c }
+\cs_generate_variant:Nn \dim_set:Nn  { NV , c , cV }
+\cs_generate_variant:Nn \dim_gset:Nn { NV , c , cV }
 \cs_new_protected:Npn \dim_set_eq:NN #1#2
   { #1 = #2 \scan_stop: }
 \cs_generate_variant:Nn \dim_set_eq:NN { c , Nc , cc }
@@ -13379,8 +13377,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { #1 = \tex_glueexpr:D #2 \scan_stop: }
 \cs_new_protected:Npn \skip_gset:Nn #1#2
   { \tex_global:D #1 = \tex_glueexpr:D #2 \scan_stop: }
-\cs_generate_variant:Nn \skip_set:Nn  { c }
-\cs_generate_variant:Nn \skip_gset:Nn { c }
+\cs_generate_variant:Nn \skip_set:Nn  { NV , c , cV }
+\cs_generate_variant:Nn \skip_gset:Nn { NV , c , cV }
 \cs_new_protected:Npn \skip_set_eq:NN #1#2 { #1 = #2 }
 \cs_generate_variant:Nn \skip_set_eq:NN { c , Nc , cc }
 \cs_new_protected:Npn \skip_gset_eq:NN #1#2 { \tex_global:D #1 = #2 }
@@ -13472,8 +13470,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { #1 = \tex_muexpr:D #2 \scan_stop: }
 \cs_new_protected:Npn \muskip_gset:Nn #1#2
   { \tex_global:D #1 = \tex_muexpr:D #2 \scan_stop: }
-\cs_generate_variant:Nn \muskip_set:Nn  { c }
-\cs_generate_variant:Nn \muskip_gset:Nn { c }
+\cs_generate_variant:Nn \muskip_set:Nn  { NV , c , cV }
+\cs_generate_variant:Nn \muskip_gset:Nn { NV , c , cV }
 \cs_new_protected:Npn \muskip_set_eq:NN #1#2 { #1 = #2 }
 \cs_generate_variant:Nn \muskip_set_eq:NN { c , Nc , cc }
 \cs_new_protected:Npn \muskip_gset_eq:NN #1#2 { \tex_global:D #1 = #2 }
@@ -13750,8 +13748,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
 \str_new:N \l__keys_property_str
 \bool_new:N \l__keys_selective_bool
 \bool_new:N \l__keys_exclude_bool
-\seq_new:N \l__keys_selective_clist
-\seq_new:N \l__keys_tmp_clist
+\clist_new:N \l__keys_selective_clist
+\clist_new:N \l__keys_tmp_clist
 \clist_new:N \l__keys_unused_clist
 \tl_new:N \l_keys_value_tl
 \bool_new:N \l__keys_tmp_bool
@@ -13859,8 +13857,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   {
     \bool_if:NTF \l__keys_no_value_bool
       {
-        \exp_after:wN \__keys_define_code:w
-          \l__keys_property_str \s__keys_stop
+        \__keys_define_code:nnn
+          { \use:c { \c__keys_props_root_str \l__keys_property_str } {#1} }
           { \use:c { \c__keys_props_root_str \l__keys_property_str } }
           {
             \msg_error:nnee { keys } { property-requires-value }
@@ -13869,9 +13867,27 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
       }
       { \use:c { \c__keys_props_root_str \l__keys_property_str } {#1} }
   }
-\exp_last_unbraced:NNNNo
-  \cs_new:Npn \__keys_define_code:w #1 \c_colon_str #2 \s__keys_stop
-    { \tl_if_empty:nTF {#2} }
+\cs_new:Npe \__keys_define_code:nnn
+  {
+    \exp_not:N \exp_after:wN \exp_not:N \__keys_define_code:w
+      \exp_not:N \l__keys_property_str
+      \c_colon_str \c_colon_str
+      \exp_not:N \s__keys_stop
+  }
+\use:e
+  {
+    \cs_new:Npn \exp_not:N \__keys_define_code:w
+      #1 \c_colon_str #2 \c_colon_str #3 \exp_not:N \s__keys_stop
+  }
+    {
+      \tl_if_empty:nTF {#3}
+        { \use_i:nnn }
+        {
+          \tl_if_empty:nTF {#2}
+            { \use_ii:nnn }
+            { \use_iii:nnn }
+        }
+    }
 \cs_new_protected:Npn \__keys_bool_set:Nn #1#2
   { \__keys_bool_set:Nnnn #1 {#2} { true } { false } }
 \cs_generate_variant:Nn \__keys_bool_set:Nn { c }
@@ -17419,8 +17435,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { \__kernel_tl_gset:Nx #1 { \exp_not:f { \__fp_parse:n {#2} } } }
 \cs_new_protected:Npn \fp_const:Nn #1#2
   { \tl_const:Ne #1 { \exp_not:f { \__fp_parse:n {#2} } } }
-\cs_generate_variant:Nn \fp_set:Nn {c}
-\cs_generate_variant:Nn \fp_gset:Nn {c}
+\cs_generate_variant:Nn \fp_set:Nn { NV , c , cV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV , c , cV }
 \cs_generate_variant:Nn \fp_const:Nn {c}
 \cs_new_eq:NN \fp_set_eq:NN  \tl_set_eq:NN
 \cs_new_eq:NN \fp_gset_eq:NN \tl_gset_eq:NN
@@ -25024,21 +25040,21 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   {
     \cs_set_nopar:Npe \l__tl_peek_code_tl
       {
-        \tex_let:D \exp_not:N #1 \scan_stop:
-        \exp_not:o \l__tl_peek_code_tl
+        \tex_let:D \exp_not:N #1 \l__tl_peek_code_tl
+        \l__tl_peek_code_tl
         {
           \exp_not:n { \__kernel_exp_not:w \exp_after:wN }
             { \exp_not:N \exp_not:N \exp_not:N #1 }
         }
         \exp_after:wN \__tl_peek_analysis_exp_aux:Nw
-        \token_to_str:N #1 \prg_do_nothing: \s__tl
+        \token_to_str:N #1 { } \s__tl
       }
     \l__tl_peek_code_tl
   }
 \cs_new:Npe \__tl_peek_analysis_exp_aux:Nw #1#2 \s__tl
   {
-    \exp_not:N \if:w \scan_stop: #2 \scan_stop:
-      { \exp_not:N \int_value:w `#1 } \token_to_str:N D
+    \exp_not:N \if_meaning:w \scan_stop: #2 \scan_stop:
+      { \exp_not:N \int_value:w `#1 ~ } \token_to_str:N D
     \exp_not:N \else:
       { -1 } 0
     \exp_not:N \fi:
@@ -32245,7 +32261,7 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
 \cs_new_protected:Npn \vcoffin_gset_end: { }
 \cs_new_protected:Npn \coffin_set_eq:NN #1#2
   {
-    \__coffin_if_exist:NT #1
+    \__coffin_if_exist:NT #2
       {
         \box_set_eq:NN #1 #2
         \prop_set_eq:cc { coffin ~ \__coffin_to_value:N #1 ~ corners }
@@ -32257,7 +32273,7 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
 \cs_generate_variant:Nn \coffin_set_eq:NN { c , Nc , cc }
 \cs_new_protected:Npn \coffin_gset_eq:NN #1#2
   {
-    \__coffin_if_exist:NT #1
+    \__coffin_if_exist:NT #2
       {
         \box_gset_eq:NN #1 #2
         \prop_gset_eq:cc { coffin ~ \__coffin_to_value:N #1 ~ corners }
@@ -32278,6 +32294,8 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
 \cs_new_eq:NN \coffin_dp:c \box_dp:c
 \cs_new_eq:NN \coffin_ht:N \box_ht:N
 \cs_new_eq:NN \coffin_ht:c \box_ht:c
+\cs_new_eq:NN \coffin_ht_plus_dp:N \box_ht_plus_dp:N
+\cs_new_eq:NN \coffin_ht_plus_dp:c \box_ht_plus_dp:c
 \cs_new_eq:NN \coffin_wd:N \box_wd:N
 \cs_new_eq:NN \coffin_wd:c \box_wd:c
 \cs_new_protected:Npn \__coffin_get_pole:NnN #1#2#3
@@ -33722,15 +33740,17 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
             \tl_set:ce { l__codepoint_ #1 _block_tl }
               { \int_eval:n { \tl_use:c { l__codepoint_ #1 _block_tl } + 1 } }
           }
-        \prg_replicate:nn {#2}
+        \int_step_inline:nnn
+          { \tl_use:c { l__codepoint_ #1 _pos_tl } + 1 }
+          { \tl_use:c { l__codepoint_ #1 _pos_tl } + #2 }
           {
-            \tl_set:ce { l__codepoint_ #1 _pos_tl }
-              { \int_eval:n { \tl_use:c { l__codepoint_ #1 _pos_tl } + 1 } }
             \exp_args:Nc \__kernel_intarray_gset:Nnn
               { g__codepoint_ #1 _index_intarray }
-              { \tl_use:c { l__codepoint_ #1 _pos_tl } }
+              {##1}
               \l__codepoint_matched_block_tl
           }
+        \tl_set:ce { l__codepoint_ #1 _pos_tl }
+          { \int_eval:n { \tl_use:c { l__codepoint_ #1 _pos_tl } + #2 } }
       \clist_clear:c { l__codepoint_ #1 _block_clist }
     }
   \cs_set_protected:Npn \__codepoint_finalise_blocks:
@@ -37377,10 +37397,10 @@ Type  H <return>  for immediate help}\def~{\errmessage{%
   { \text_uppercase:nn {#1} {#2} }
 \__kernel_patch_deprecation:nnNNpn { 2020-01-03 } { \text_titlecase_first:n }
 \cs_new:Npn \tl_mixed_case:n #1
-  { \text_titlecase_first:n {#1} }
+  { \text_titlecase_first:n { \text_lowercase:n {#1} } }
 \__kernel_patch_deprecation:nnNNpn { 2020-01-03 } { \text_titlecase_first:nn }
 \cs_new:Npn \tl_mixed_case:nn #1#2
-  { \text_titlecase_first:nn {#1} {#2} }
+  { \text_titlecase_first:nn {#1} { \text_lowercase:n {#2} } }
 \__kernel_patch_deprecation:nnNNpn { 2022-05-23 } { \token_case_meaning:Nn }
 \cs_new:Npn \tl_case:Nn { \token_case_meaning:Nn }
 \__kernel_patch_deprecation:nnNNpn { 2022-05-23 } { \token_case_meaning:NnT }

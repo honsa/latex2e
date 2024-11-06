@@ -20,7 +20,7 @@
 %% 
 %% File: l3doc.dtx
 \RequirePackage{calc}
-\ProvidesExplClass{l3doc}{2024-05-08}{}
+\ProvidesExplClass{l3doc}{2024-11-02}{}
   {L3 Experimental documentation class}
 \clist_new:N \g_docinput_clist
 \seq_new:N \g_doc_functions_seq
@@ -91,8 +91,8 @@
 \bool_new:N \l__codedoc_in_implementation_bool
 \bool_new:N \g__codedoc_typeset_documentation_bool
 \bool_new:N \g__codedoc_typeset_implementation_bool
-\bool_set_true:N \g__codedoc_typeset_documentation_bool
-\bool_set_true:N \g__codedoc_typeset_implementation_bool
+\bool_gset_true:N \g__codedoc_typeset_documentation_bool
+\bool_gset_true:N \g__codedoc_typeset_implementation_bool
 \tl_new:N \g__codedoc_base_name_tl
 \prop_new:N \l__codedoc_variants_prop
 \clist_new:N \l__codedoc_function_label_clist
@@ -439,12 +439,23 @@
 \raggedbottom
 \bool_if:NT \g__codedoc_lmodern_bool
   {
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage{lmodern}
-    \group_begin:
-      \ttfamily
-      \DeclareFontShape{T1}{lmtt}{m}{it}{<->ec-lmtto10}{}
-    \group_end:
+    \bool_lazy_or:nnTF
+      { \sys_if_engine_luatex_p: }{ \sys_if_engine_xetex_p: }
+      {
+        \group_begin:
+          \ttfamily
+          \DeclareFontShape{TU}{lmtt}{m}{it}
+            {<-> \UnicodeFontFile{lmmonoslant10-regular}{}}{}
+        \group_end:
+      }
+      {
+        \RequirePackage[T1]{fontenc}
+        \RequirePackage{lmodern}
+        \group_begin:
+          \ttfamily
+          \DeclareFontShape{T1}{lmtt}{m}{it}{<->ec-lmtto10}{}
+        \group_end:
+      }
   }
 \RequirePackage{hypdoc}
 \cs_gset:Npn \MakePrivateLetters
@@ -789,17 +800,20 @@
 \cs_generate_variant:Nn \__codedoc_get_hyper_target:nN { o , e }
 \cs_new_protected:Npn \__codedoc_names_get_seq:nN #1#2
   {
-    \__kernel_tl_set:Nx \l__codedoc_tmpa_tl { \tl_to_str:n {#1} }
     \bool_if:NTF \l__codedoc_names_verb_bool
       {
         \seq_clear:N #2
-        \seq_put_right:NV #2 \l__codedoc_tmpa_tl
+        \seq_put_right:No #2 { \tl_to_str:n {#1} }
       }
       {
+        \tl_set:Nn \l__codedoc_tmpa_tl {#1}
+        \tl_remove_all:Ne \l__codedoc_tmpa_tl
+          { \exp_not:N \obeyedline \c_percent_str }
+        \tl_remove_all:Ne \l__codedoc_tmpa_tl
+          { \exp_not:N \obeyedline }
+        \__kernel_tl_set:Nx \l__codedoc_tmpa_tl { \tl_to_str:N \l__codedoc_tmpa_tl }
         \tl_remove_all:Ne \l__codedoc_tmpa_tl
           { \iow_char:N \^^M \c_percent_str }
-        \tl_remove_all:Ne \l__codedoc_tmpa_tl
-          { \token_to_str:N \obeyedline \c_space_tl \c_percent_str }
         \tl_remove_all:Ne \l__codedoc_tmpa_tl { \tl_to_str:n { ^ ^ A } }
         \tl_remove_all:Ne \l__codedoc_tmpa_tl { \iow_char:N \^^I }
         \tl_remove_all:Ne \l__codedoc_tmpa_tl { \iow_char:N \^^M }
@@ -1023,7 +1037,7 @@
 \cs_new_protected:Npn \__codedoc_function_typeset_stop:
   {
     \par
-    \dim_set:Nn \prevdepth { \box_dp:N \l__codedoc_descr_coffin }
+    \dim_set:Nn \prevdepth { \coffin_dp:N \l__codedoc_descr_coffin }
     \allowbreak
   }
 \cs_new_protected:Npn \__codedoc_function_init:
@@ -1059,7 +1073,7 @@
     \dim_zero:N \l__codedoc_trial_width_dim
     \hcoffin_set:Nn \l__codedoc_functions_coffin { \__codedoc_typeset_functions: }
     \dim_set:Nn \l__codedoc_trial_width_dim
-      { \box_wd:N \l__codedoc_functions_coffin }
+      { \coffin_wd:N \l__codedoc_functions_coffin }
     \bool_set:Nn \l__codedoc_long_name_bool
       { \dim_compare_p:nNn \l__codedoc_trial_width_dim > \marginparwidth }
   }
@@ -1087,7 +1101,7 @@
         \coffin_join:NnnNnnnn
           \l__codedoc_output_coffin {l} {b}
           \l__codedoc_descr_coffin  {l} {t}
-          {0.75\marginparwidth + \marginparsep} {-\medskipamount}
+          {\marginparwidth + \marginparsep} {-\medskipamount}
         \coffin_typeset:Nnnnn \l__codedoc_output_coffin
           {\l__codedoc_descr_coffin-l} {\l__codedoc_descr_coffin-t}
           {0pt} {0pt}
@@ -1136,7 +1150,6 @@
       { \__codedoc_typeset_variant_list:nN {#1} #2 }
     \\
   }
-\cs_generate_variant:Nn \__codedoc_typeset_function_block:nN { e }
 \cs_new_protected:Npn \__codedoc_function_index:n #1
   {
     \seq_gput_right:Nn \g_doc_functions_seq {#1}
@@ -1234,7 +1247,7 @@
       {
         \textwidth
         \bool_if:NT \l__codedoc_long_name_bool
-          { + 0.75 \marginparwidth - \l__codedoc_trial_width_dim }
+          { + \marginparwidth - \l__codedoc_trial_width_dim }
       }
     \hbox_gset:Nw \g__codedoc_syntax_box
       \small \ttfamily
@@ -1789,7 +1802,7 @@
   {
     \clist_map_inline:nn {#1}
       {
-        \clist_put_right:Nn \g_docinput_clist {##1}
+        \clist_gput_right:Nn \g_docinput_clist {##1}
         \__codedoc_input:n {##1}
       }
   }
@@ -1883,7 +1896,7 @@
           { MMMMV - \filesep \int_use:N \c@CodelineNo }
       }
   }
-\tl_gclear:N \filesep
+\tl_clear_new:N \filesep
 \cs_new_protected:Npn \__codedoc_index_page_hc:nn #1#2
   {
     \protected@write \@indexfile {}
@@ -2186,7 +2199,6 @@
       {#2}
       \l__codedoc_index_internal_bool
   }
-\cs_generate_variant:Nn \__codedoc_special_index:nn { o }
 \tl_new:N \l__codedoc_index_escaped_macro_tl
 \tl_new:N \l__codedoc_index_escaped_key_tl
 \cs_new_protected:Npn \__codedoc_special_index_module:nnnnN #1#2#3#4#5

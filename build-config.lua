@@ -43,8 +43,8 @@ typesetsuppfiles = typesetsuppfiles or
 
 -- Ensure the local format file is used
 function tex(file,dir,mode)
-  local dir = dir or "."
-  local mode = mode or "nonstopmode"
+  dir = dir or "."
+  mode = mode or "nonstopmode"
   return runcmd(
     'pdftex -fmt=pdflatex -interaction=' .. mode .. ' -jobname="' ..
       string.match(file,"^[^.]*") .. '" "\\input ' .. file .. '"',
@@ -119,10 +119,11 @@ function update_tag(file,content,tagname,tagdate)
   if rev and tonumber(rev) ~= 0 then
     if main_branch then
       tag = tag .. " patch level " .. rev
+      patch_level = rev
     else
       tag = tag .. " pre-release " .. rev
+      patch_level = "-" .. rev
     end
-    patch_level = rev
   end
   if file == "README.md" then
     return string.gsub(content,
